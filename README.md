@@ -1,6 +1,6 @@
 # classify_skin_cancer_images
 
-This repository contains a machine learning pipeline that processes image data, trains multiple models (VGG16, ResNet50, InceptionV3, EfficientNetB0, and DenseNet121), and performs post-processing to evaluate the results.
+This repository contains a machine learning pipeline that processes image data, trains multiple models one after the other (VGG16, ResNet50, InceptionV3, EfficientNetB0, and DenseNet121), and performs post-processing to evaluate the results.
 
 ## Table of Contents
 
