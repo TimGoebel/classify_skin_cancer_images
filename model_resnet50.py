@@ -68,8 +68,9 @@ def train_resnet(new_directory_path, directory):
 
     # Create model
     model = create_model()
-    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-5)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-6)
     model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+    # model.compile(optimizer='adam', loss='binary_focal_loss', metrics=['accuracy'])
 
     # Set up callbacks
     early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
@@ -85,8 +86,8 @@ def train_resnet(new_directory_path, directory):
         zoom_range=0.2,               # Random zoom
         horizontal_flip=True,         # Random horizontal flip
         # vertical_flip=True,           # Random vertical flip
-        fill_mode='nearest',          # Filling strategy for newly created pixels
-        brightness_range=[0.8, 1.2]  # Random brightness adjustments
+        fill_mode='nearest'          # Filling strategy for newly created pixels
+        # brightness_range=[0.8, 1.2]  # Random brightness adjustments
         # channel_shift_range=0.2       # Random channel shifts
     )
 
@@ -111,8 +112,9 @@ def train_resnet(new_directory_path, directory):
     for layer in model.layers[-10:]:
         layer.trainable = True
 
-    optimizer_fine = tf.keras.optimizers.Adam(learning_rate=1e-6)
+    optimizer_fine = tf.keras.optimizers.Adam(learning_rate=1e-7)
     model.compile(optimizer=optimizer_fine, loss='binary_crossentropy', metrics=['accuracy'])
+    # model.compile(optimizer=optimizer_fine, loss='binary_focal_loss', metrics=['accuracy'])
 
     # Continue training with fine-tuning
     history_fine = model.fit(
@@ -127,5 +129,3 @@ def train_resnet(new_directory_path, directory):
 
     # Save the final model
     model.save(model_dir + '/resnet50_final_model.h5')
-
-
